@@ -1,0 +1,125 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/security
+                    http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <import resource="spring-persistent-servlet.xml"/>
+
+    <!--  authentication manager and its provider( social provider deals with social login & local user provider deals with form login ) -->
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider ref="socialAuthenticationProvider"/>
+        <security:authentication-provider user-service-ref="localUserDetailService"/>
+    </security:authentication-manager>
+
+    <bean id="socialAuthenticationProvider" class="org.springframework.social.security.SocialAuthenticationProvider">
+        <constructor-arg ref="inMemoryUsersConnectionRepository"/>
+        <constructor-arg ref="socialUserDetailService"/>
+    </bean>
+
+    <!-- form login beans -->
+    <bean id="appAuthenticationEntryPoint"
+          class="com.spring.security.social.login.example.entrypoint.AppAuthenticationEntryPoint">
+        <constructor-arg name="loginFormUrl" value="/services/login"/>
+    </bean>
+    <bean id="rememberMeServices"
+          class="org.springframework.security.web.authentication.NullRememberMeServices"/>
+    <bean id="successHandler" class="com.spring.security.social.login.example.handler.AppSuccessHandler"/>
+    <bean id="failureHandler"
+          class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+        <constructor-arg name="defaultFailureUrl" value="/services/accessdenied"/>
+    </bean>
+    <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg name="logoutSuccessHandler" ref="logoutSuccessHandler"/>
+        <constructor-arg name="handlers">
+            <list>
+                <bean name="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="logoutSuccessHandler" class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler"/>
+    <bean class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
+          id="SecurityAuthFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationSuccessHandler" ref="successHandler"/>
+        <property name="authenticationFailureHandler" ref="failureHandler"/>
+        <property name="filterProcessesUrl" value="/j_spring_security_check"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+    </bean>
+
+
+    <!-- Anyone can access these urls -->
+    <security:http pattern="/services/login" security="none"/>
+    <security:http pattern="/services/accessdenied" security="none"/>
+    <security:http pattern="/services/signup" security="none"/>
+    <security:http pattern="/services/user/register" security="none"/>
+
+    <security:http use-expressions="true" entry-point-ref="appAuthenticationEntryPoint">
+
+        <security:intercept-url pattern="/auth/**" access="permitAll"/>
+        <security:intercept-url pattern="/j_spring_security_check" access="permitAll"/>
+
+        <security:intercept-url pattern="/" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+
+        <!-- Adds social authentication filter to the Spring Security filter chain. -->
+        <security:custom-filter before="PRE_AUTH_FILTER" ref="socialAuthenticationFilter"/>
+        <security:custom-filter position="FORM_LOGIN_FILTER" ref="SecurityAuthFilter"/>
+        <security:custom-filter position="LOGOUT_FILTER" ref="logoutFilter"/>
+    </security:http>
+
+    <!-- social login filter which is a pre authentication filter and works for /auth service url -->
+    <bean id="socialAuthenticationFilter" class="org.springframework.social.security.SocialAuthenticationFilter">
+        <constructor-arg name="authManager" ref="authenticationManager"/>
+        <constructor-arg name="userIdSource" ref="userIdSource"/>
+        <constructor-arg name="usersConnectionRepository" ref="inMemoryUsersConnectionRepository"/>
+        <constructor-arg name="authServiceLocator" ref="appSocialAuthenticationServiceRegistry"/>
+        <property name="authenticationSuccessHandler" ref="successHandler"/>
+    </bean>
+
+
+    <!-- inmemory connection repository which holds connection repository per local user -->
+    <bean id="inMemoryUsersConnectionRepository"
+          class="org.springframework.social.connect.mem.InMemoryUsersConnectionRepository">
+        <constructor-arg name="connectionFactoryLocator" ref="appSocialAuthenticationServiceRegistry"/>
+        <property name="connectionSignUp" ref="connectionSignUp"/>
+    </bean>
+
+    <!-- service registry will holds connection factory of each social provider -->
+    <bean id="appSocialAuthenticationServiceRegistry"
+          class="com.spring.security.social.login.example.registry.AppSocialAuthenticationServiceRegistry">
+        <constructor-arg>
+            <list>
+                <ref bean="facebookAuthenticationService"/>
+                <ref bean="twitterAuthenticationService" />
+                <ref bean="linkedInAuthenticationService"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="facebookAuthenticationService"
+          class="org.springframework.social.facebook.security.FacebookAuthenticationService">
+        <constructor-arg name="apiKey" value="${facebook.api.key}"/>
+        <constructor-arg name="appSecret" value="${facebook.api.secret}"/>
+    </bean>
+
+    <bean id="twitterAuthenticationService"
+          class="org.springframework.social.twitter.security.TwitterAuthenticationService">
+        <constructor-arg name="apiKey" value="${twitter.api.key}"/>
+        <constructor-arg name="appSecret" value="${twitter.api.secret}"/>
+    </bean>
+
+    <bean id="linkedInAuthenticationService"
+          class="org.springframework.social.linkedin.security.LinkedInAuthenticationService">
+        <constructor-arg name="apiKey" value="${linkedin.api.key}"/>
+        <constructor-arg name="appSecret" value="${linkedin.api.secret}"/>
+    </bean>
+
+    <bean id="userIdSource" class="org.springframework.social.security.AuthenticationNameUserIdSource"/>
+
+    <!-- If no local user is associated to a social connection then connection sign up will create a new local user and map it to social user -->
+    <bean id="connectionSignUp" class="com.spring.security.social.login.example.registry.AppConnectionSignUp"/>
+</beans>
