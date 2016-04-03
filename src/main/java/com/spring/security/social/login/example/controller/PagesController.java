@@ -32,7 +32,7 @@ public class PagesController {
     public ModelAndView userPage() {
 
         ModelAndView model = new ModelAndView();
-        model.addObject("title", "Spring social security Hello World");
+        model.addObject("title", "Spring security social login Hello World");
         model.addObject("user", getUser());
         model.setViewName("user");
         return model;

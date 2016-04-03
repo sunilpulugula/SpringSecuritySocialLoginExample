@@ -37,14 +37,35 @@
 
         <form name='User Registration'
             		  action="<c:url value='../user/register' />" method='POST'>
-        EmailId        <input type="text" id="emailid" name="emailid" placeholder="EmailId"  /><br/>
-        FirstName      <input type="text" id="firstName" name="firstName" placeholder="FirstName"  /><br/>
-        LastName       <input type="text" id="lastName" name="lastName" placeholder="LastName"  /><br/>
-        Phone Number   <input type="text" id="phoneno" name="phoneno" placeholder="Phone Number"  /><br/>
-        Password       <input type="password" id="password" name="password" placeholder="Password" /><br/>
-        Confirm Password<input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" /><br/>
-        <button>Submit</button></br>
-
+       <TABLE border="0" cellspacing="5" cellpadding="3">
+       <TR>
+            <th> EmailId </th>
+            <td><input type="text" id="emailid" name="emailid" placeholder="EmailId"  /></td>
+       </TR>
+       <TR>
+            <th> FirstName </th>
+            <td><input type="text" id="firstName" name="firstName" placeholder="FirstName"  /></td>
+       </TR>
+       <TR>
+            <th> LastName   </th>
+            <td><input type="text" id="lastName" name="lastName" placeholder="LastName"  /></td>
+       </TR>
+       <TR>
+            <th> Phone Number </th>
+            <td><input type="text" id="phoneno" name="phoneno" placeholder="Phone Number"  /></td>
+       </TR>
+       <TR>
+            <th> Password  </th>
+            <td><input type="password" id="password" name="password" placeholder="Password" /></td>
+       </TR>
+       <TR>
+            <th> Confirm Password </th>
+            <td><input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" /></td>
+       </TR>
+       <TR>
+            <th> <button>Submit</button> </th>
+       </TR>
+       </TABLE>
         </form>
 
 
