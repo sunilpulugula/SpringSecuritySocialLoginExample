@@ -9,6 +9,7 @@ public class UserRegistrationForm {
     private String userId;
     private String firstName;
     private String lastName;
+    private String phoneno;
     private String email;
     private String password;
     private SocialProvider socialProvider;
@@ -16,10 +17,11 @@ public class UserRegistrationForm {
     public UserRegistrationForm() {
     }
 
-    public UserRegistrationForm(final String userId, final String firstName, final String lastName, final String email, final String password, final SocialProvider socialProvider) {
+    public UserRegistrationForm(final String userId, final String firstName, final String lastName, final String phoneno, final String email, final String password, final SocialProvider socialProvider) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phoneno = phoneno;
         this.email = email;
         this.password = password;
         this.socialProvider = socialProvider;
@@ -69,6 +71,14 @@ public class UserRegistrationForm {
         this.password = password;
     }
 
+    public String getPhoneno() {
+        return phoneno;
+    }
+
+    public void setPhoneno(final String phoneno) {
+        this.phoneno = phoneno;
+    }
+
     public SocialProvider getSocialProvider() {
         return socialProvider;
     }
@@ -81,6 +91,7 @@ public class UserRegistrationForm {
         private String userId;
         private String firstName;
         private String lastName;
+        private String phoneno;
         private String email;
         private String password;
         private SocialProvider socialProvider;
@@ -110,13 +121,18 @@ public class UserRegistrationForm {
             return this;
         }
 
+        public Builder addPhoneNo(final String phoneno) {
+            this.phoneno = phoneno;
+            return this;
+        }
+
         public Builder addSocialProvider(final SocialProvider socialProvider) {
             this.socialProvider = socialProvider;
             return this;
         }
 
         public UserRegistrationForm build() {
-            return new UserRegistrationForm(userId, firstName, lastName, email, password, socialProvider);
+            return new UserRegistrationForm(userId, firstName, lastName, phoneno, email, password, socialProvider);
         }
     }
 }

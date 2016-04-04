@@ -5,42 +5,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>${title}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
-
-    function post(path, parameters) {
-        var form = $('<form></form>');
-
-        form.attr("method", "post");
-        form.attr("action", path);
-
-        $.each(parameters, function(key, value) {
-            var field = $('<input></input>');
-
-            field.attr("type", "hidden");
-            field.attr("name", key);
-            field.attr("value", value);
-
-            form.append(field);
-        });
-
-        // The form needs to be a part of the document in
-        // order for us to be able to submit it.
-        $(document.body).append(form);
-        form.submit();
-    }
-
-
     </script>
 </head>
 <body>
 <h2>${title}</h2>
 <br/>
 
-        <form name='User Registration'
-            		  action="<c:url value='../user/register' />" method='POST'>
+        <form id="registrationForm" name='userRegistration'
+            		  action="<c:url value='../services/user/register' />" method='POST'>
        <TABLE border="0" cellspacing="5" cellpadding="3">
        <TR>
+                   <th> UserId </th>
+                   <td><input type="text" id="userId" name="userId" placeholder="UserId"  /></td>
+              </TR>
+       <TR>
             <th> EmailId </th>
-            <td><input type="text" id="emailid" name="emailid" placeholder="EmailId"  /></td>
+            <td><input type="text" id="email" name="email" placeholder="EmailId"  /></td>
        </TR>
        <TR>
             <th> FirstName </th>
@@ -50,24 +30,59 @@
             <th> LastName   </th>
             <td><input type="text" id="lastName" name="lastName" placeholder="LastName"  /></td>
        </TR>
-       <TR>
+       <!--TR>
             <th> Phone Number </th>
             <td><input type="text" id="phoneno" name="phoneno" placeholder="Phone Number"  /></td>
-       </TR>
+       </TR-->
        <TR>
             <th> Password  </th>
             <td><input type="password" id="password" name="password" placeholder="Password" /></td>
        </TR>
-       <TR>
+       <!--TR>
             <th> Confirm Password </th>
             <td><input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" /></td>
-       </TR>
+       </TR-->
        <TR>
-            <th> <button>Submit</button> </th>
+            <th>
+                <input type="hidden" id="socialProvider" name="socialProvider" value="NONE" />
+                <button id="doRegister">Submit</button>
+            </th>
        </TR>
        </TABLE>
         </form>
 
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#doRegister').click(function () {
+
+            var obj = {};
+
+            $('#registrationForm').serialize().split('&').forEach(function (a) {
+                var s = a.split('=');
+                obj[s[0]] = s[1];
+            });
+
+            obj = $('#registrationForm').serialize();
+
+            $.ajax({
+              type: "POST",
+              url: '../services/user/register',
+              data: obj,
+              dataType: 'json',
+              success: function () {
+                alert('success');
+              }
+            });
+
+            return false;
+        });
+
+    });
+
+</script>
 
 </body>
 </html>
