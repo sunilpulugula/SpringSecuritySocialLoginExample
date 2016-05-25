@@ -311,6 +311,33 @@ body{
 	background: #1077A9;
 }
 
+.span3 {
+	margin-top: 9%;
+	width: 100%;
+	background: #2F93C3;
+	transition: all 0.5s ease-out;
+	-webkit-transition: all 0.5s ease-out;
+	-moz-transition: all 0.5s ease-out;
+	-ms-transition: all 0.5s ease-out;
+	-o-transition: all 0.5s ease-out;
+}
+.span3 img {
+	background: #1077A9;
+	padding: 7px;
+	float: left;
+}
+.span3 i {
+	color: #fff;
+	padding: 9px 17px;
+	float: left;
+	font-size: 1.6em;
+	font-weight: 400;
+}
+.span3:hover {
+	background: #1077A9;
+}
+
+
 /*end-checkbox*/
 /*-----start-responsive-design------*/
 @media only screen and (max-width: 1440px){
@@ -326,6 +353,9 @@ body{
 	.span2 i {
 		font-size: 1.4em;
 	}
+	.span3 i {
+    		font-size: 1.4em;
+    	}
 	.login_form p {
 		padding: 8px 7px;
 	}
@@ -343,6 +373,9 @@ body{
 	.span2 i {
 		font-size: 1.4em;
 	}
+	.span3 i {
+    		font-size: 1.4em;
+    	}
 	.login_form p {
 		padding: 8px 3px;
 	}
@@ -359,7 +392,9 @@ body{
 	}
 	.span2 i {
 		font-size: 1.3em;
-	}
+	}.span3 i {
+     		font-size: 1.3em;
+    }
 }
 @media only screen and (max-width: 1024px){
 	.wrap{
@@ -380,6 +415,10 @@ body{
 		font-size: 1.2em;
 		padding: 13px 14px;
 	}
+	.span3 i {
+    		font-size: 1.2em;
+    		padding: 13px 14px;
+    	}
 	.checkbox {
 		margin-right: 0px;
 	}
@@ -400,6 +439,10 @@ body{
 		font-size: 1.2em;
 		padding: 13px 20px;
 	}
+	.span3 i {
+    		font-size: 1.2em;
+    		padding: 13px 20px;
+    	}
 	.login_form {
 		//background: url("../images/border.png") no-repeat 313px 77px;
 	}
@@ -456,6 +499,13 @@ body{
 		padding: 11px 6px;
 		font-size: 1em;
 	}
+	.span3 img {
+    		padding: 2px;
+    	}
+    .span3 i {
+    		padding: 11px 6px;
+    		font-size: 1em;
+    }
 	.login_form {
 		//background: url("../images/border.png") no-repeat 247px 41px;
 	}
@@ -628,6 +678,17 @@ body{
 						<div class="clear"></div>
 					</form>
 				</div>
+				<div class="span3">
+                	<form name='GoogleSocialloginForm'
+                      action="<c:url value='../auth/google' />" method='POST'>
+                		<img src="../images/gmail2.jpg" alt="">
+                		<button type="submit">
+                			<i>Sign In with Google</i>
+                		</button>
+                		<input type="hidden" name="scope" value="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo#email https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/tasks https://www-opensocial.googleusercontent.com/api/people https://www.googleapis.com/auth/plus.login" />
+                		<div class="clear"></div>
+                	</form>
+                				</div>
 			</div>	
 			<div class="clear"></div>	
 		</div>

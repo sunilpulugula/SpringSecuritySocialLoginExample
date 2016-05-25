@@ -17,6 +17,7 @@
         <spring.social.facebook.version>1.1.0.RELEASE</spring.social.facebook.version>
         <spring.social.twitter.version>1.1.0.RELEASE</spring.social.twitter.version>
         <spring.social.linkedin.version>1.0.0.RELEASE</spring.social.linkedin.version>
+        <spring.social.google.version>1.0.0.RELEASE</spring.social.google.version>
         <spring-orm-version>4.1.1.RELEASE</spring-orm-version>
 
         <hibernate.version>4.3.11.Final</hibernate.version>
@@ -106,6 +107,14 @@
             <artifactId>spring-social-linkedin</artifactId>
             <version>${spring.social.linkedin.version}</version>
         </dependency>
+        <!-- Spring Social google In -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-google</artifactId>
+            <version>${spring.social.google.version}</version>
+        </dependency>
+
+
 
         <!-- hibernate dependencies -->
         <dependency>

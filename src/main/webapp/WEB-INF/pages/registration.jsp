@@ -11,8 +11,7 @@
 <h2>${title}</h2>
 <br/>
 
-        <form id="registrationForm" name='userRegistration'
-            		  action="<c:url value='../services/user/register' />" method='POST'>
+       <div id="registrationForm" />
        <TABLE border="0" cellspacing="5" cellpadding="3">
        <TR>
                    <th> UserId </th>
@@ -30,57 +29,55 @@
             <th> LastName   </th>
             <td><input type="text" id="lastName" name="lastName" placeholder="LastName"  /></td>
        </TR>
-       <!--TR>
+       <TR>
             <th> Phone Number </th>
             <td><input type="text" id="phoneno" name="phoneno" placeholder="Phone Number"  /></td>
-       </TR-->
+       </TR>
        <TR>
             <th> Password  </th>
             <td><input type="password" id="password" name="password" placeholder="Password" /></td>
        </TR>
-       <!--TR>
+       <TR>
             <th> Confirm Password </th>
             <td><input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" /></td>
-       </TR-->
+       </TR>
        <TR>
             <th>
                 <input type="hidden" id="socialProvider" name="socialProvider" value="NONE" />
-                <button id="doRegister">Submit</button>
+                <button type="button" id="doRegister" onclick=" proceed()">Submit</button>
             </th>
        </TR>
        </TABLE>
-        </form>
+       </div>
+
 
 
 <script>
 
-    $(document).ready(function () {
+        proceed(){
+            var person = {
+                        userId: $("##registrationForm-userId").val(),
+                        email:$("##registrationForm-email").val(),
+                        firstName:$("##registrationForm-firstName").val(),
+                        lastName: $("##registrationForm-lastName").val(),
+                        phoneno:$("##registrationForm-phoneno").val(),
+                        password: $("##registrationForm-password").val(),
+                        socialProvider:$("##registrationForm-socialProvider").val()
+                    }
 
-        $('#doRegister').click(function () {
-
-            var obj = {};
-
-            $('#registrationForm').serialize().split('&').forEach(function (a) {
-                var s = a.split('=');
-                obj[s[0]] = s[1];
-            });
-
-            obj = $('#registrationForm').serialize();
 
             $.ajax({
-              type: "POST",
+              type: "post",
               url: '../services/user/register',
-              data: obj,
+              data: person,
               dataType: 'json',
+              contentType: "application/json; charset=utf-8",
               success: function () {
                 alert('success');
               }
             });
 
-            return false;
-        });
-
-    });
+        }
 
 </script>
 

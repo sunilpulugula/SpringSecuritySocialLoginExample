@@ -22,7 +22,7 @@ import com.spring.security.social.login.example.database.model.User;
 public class SampleUsersDemo {
 
     public static void main(String[] args) {
-        URL url = SampleUsersDemo.class.getClassLoader().getResource("resources/test.hibernate.cfg.xml");
+        URL url = SampleUsersDemo.class.getClassLoader().getResource("test.hibernate.cfg.xml");
         File file = new File(url.getPath());
 
         Configuration configuration = new Configuration().configure(file);

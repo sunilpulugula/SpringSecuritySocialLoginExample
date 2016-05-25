@@ -97,6 +97,7 @@
                 <ref bean="facebookAuthenticationService"/>
                 <ref bean="twitterAuthenticationService" />
                 <ref bean="linkedInAuthenticationService"/>
+                <ref bean="googleAuthenticationService"/>
             </list>
         </constructor-arg>
     </bean>
@@ -117,6 +118,12 @@
           class="org.springframework.social.linkedin.security.LinkedInAuthenticationService">
         <constructor-arg name="apiKey" value="${linkedin.api.key}"/>
         <constructor-arg name="appSecret" value="${linkedin.api.secret}"/>
+    </bean>
+
+    <bean id="googleAuthenticationService"
+          class="org.springframework.social.google.security.GoogleAuthenticationService">
+        <constructor-arg name="apiKey" value="${google.api.key}"/>
+        <constructor-arg name="appSecret" value="${google.api.secret}"/>
     </bean>
 
     <bean id="userIdSource" class="org.springframework.social.security.AuthenticationNameUserIdSource"/>
