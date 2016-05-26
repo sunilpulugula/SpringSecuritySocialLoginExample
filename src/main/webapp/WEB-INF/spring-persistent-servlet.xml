@@ -54,6 +54,9 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">
+                    ${hibernate.dialect}
+                </prop>
+                <prop key="hibernate.hbm2ddl.auto">
                     ${hibernate.hbm2ddl.auto}
                 </prop>
                 <prop key="hibernate.show_sql">
