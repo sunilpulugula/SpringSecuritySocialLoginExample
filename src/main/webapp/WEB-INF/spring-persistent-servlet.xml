@@ -53,7 +53,7 @@
         <property name="packagesToScan" value="com.spring.security.social.login.example"/>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">
+                <prop key="hibernate.dialect">
                     ${hibernate.dialect}
                 </prop>
                 <prop key="hibernate.hbm2ddl.auto">
