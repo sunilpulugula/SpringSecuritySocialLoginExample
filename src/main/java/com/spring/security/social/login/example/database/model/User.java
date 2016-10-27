@@ -21,10 +21,10 @@ public class User implements Serializable{
     @Column(name = "NAME", nullable = true, length = 32)
     private String name;
 
-    @Column(name = "PASSWORD", nullable = true, length = 64)
+    @Column(name = "PASSWORD", nullable = false, length = 64)
     private String password;
 
-    @Column(name = "EMAIL_ID", nullable = true, length = 128)
+    @Column(name = "EMAIL_ID", nullable = false, length = 128)
     private String emailId;
 
     @Column(name = "ACTIVE", nullable = false, length = 1)

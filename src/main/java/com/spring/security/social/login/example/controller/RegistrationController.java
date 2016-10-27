@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.security.social.login.example.util.SecurityUtil;
 import com.spring.security.social.login.example.dto.LocalUser;
 import com.spring.security.social.login.example.dto.UserRegistrationForm;
 import com.spring.security.social.login.example.exception.UserAlreadyExistAuthenticationException;
@@ -35,7 +34,7 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = {"/user/register"}, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public @ResponseBody ModelAndView registerUser(@RequestBody UserRegistrationForm registrationForm) throws UserAlreadyExistAuthenticationException {
+    public @ResponseBody String registerUser(@RequestBody UserRegistrationForm registrationForm) throws UserAlreadyExistAuthenticationException {
 
         if (registrationForm.getUserId() == null) {
             registrationForm.setUserId(registrationForm.getUserId());
@@ -43,13 +42,7 @@ public class RegistrationController {
 
         LocalUser localUser = (LocalUser) userService.registerNewUser(registrationForm);
 
-        SecurityUtil.authenticateUser(localUser);
-
-        ModelAndView model = new ModelAndView();
-        model.addObject("title", "Spring security Hello World");
-        model.addObject("user", localUser.getUsername());
-        model.setViewName("user");
-        return model;
+       return "success";
 
     }
 }

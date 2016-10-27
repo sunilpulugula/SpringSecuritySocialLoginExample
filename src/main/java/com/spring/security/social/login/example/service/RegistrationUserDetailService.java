@@ -34,7 +34,7 @@ public class RegistrationUserDetailService implements UserService {
     @Transactional(value = "transactionManager")
     public LocalUser registerNewUser(final UserRegistrationForm userRegistrationForm) throws UserAlreadyExistAuthenticationException {
 
-        com.spring.security.social.login.example.database.model.User userExist = userDAO.get(userRegistrationForm.getUserId());
+        com.spring.security.social.login. example.database.model.User userExist = userDAO.get(userRegistrationForm.getUserId());
         if (userExist != null) {
             throw new UserAlreadyExistAuthenticationException("User with email id " + userRegistrationForm.getEmail() + " already exist");
         }

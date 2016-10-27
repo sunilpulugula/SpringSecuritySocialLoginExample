@@ -12,6 +12,7 @@
 <br/>
 
        <div id="registrationForm" />
+       <div id="result" style="color:#ff0000"></div>
        <TABLE border="0" cellspacing="5" cellpadding="3">
        <TR>
                    <th> UserId </th>
@@ -44,42 +45,77 @@
        <TR>
             <th>
                 <input type="hidden" id="socialProvider" name="socialProvider" value="NONE" />
-                <button type="button" id="doRegister" onclick=" proceed()">Submit</button>
+                <button type="button" id="doRegister" onclick="proceed()">Submit</button>
             </th>
        </TR>
        </TABLE>
        </div>
 
 
-
 <script>
 
-        proceed(){
-            var person = {
-                        userId: $("##registrationForm-userId").val(),
-                        email:$("##registrationForm-email").val(),
-                        firstName:$("##registrationForm-firstName").val(),
-                        lastName: $("##registrationForm-lastName").val(),
-                        phoneno:$("##registrationForm-phoneno").val(),
-                        password: $("##registrationForm-password").val(),
-                        socialProvider:$("##registrationForm-socialProvider").val()
+       function proceed(){
+
+       var userIdVar = $("#registrationForm #userId").val();
+       var emailVar = $("#registrationForm #email").val();
+       var phonenoVar = $("#registrationForm #phoneno").val();
+       var passwordVar =  $("#registrationForm #password").val();
+       var conformPasswordVar =  $("#registrationForm #confirmpassword").val();
+       var div = document.getElementById('result');
+       if(!userIdVar)
+       {
+          div.innerHTML = "User Id can not be empty";
+       }
+       else if(!emailVar)
+       {
+          div.innerHTML = "email Id can not be empty";
+       }
+       else if(!phonenoVar)
+       {
+          div.innerHTML = "phone no can not be empty";
+       }
+       else if(!passwordVar || !conformPasswordVar)
+       {
+          div.innerHTML = "password or confirm password can not be empty";
+       }
+       else if(passwordVar !== conformPasswordVar)
+       {
+          div.innerHTML = "make sure password and confirm password are same";
+       }
+       else {
+       div.innerHTML = "";
+       var person = {
+                        userId: userIdVar,
+                        email:emailVar,
+                        firstName:$("#registrationForm #firstName").val(),
+                        lastName: $("#registrationForm #lastName").val(),
+                        phoneno:phonenoVar,
+                        password: passwordVar,
+                        socialProvider:$("#registrationForm #socialProvider").val()
                     }
 
 
             $.ajax({
-              type: "post",
-              url: '../services/user/register',
-              data: person,
-              dataType: 'json',
-              contentType: "application/json; charset=utf-8",
-              success: function () {
-                alert('success');
-              }
-            });
+                          type: "POST",
+                          url: '../services/user/register',
+                          data: JSON.stringify(person),
+                          contentType: "application/json",
+                          success: function(data) {
+                            if(data == "success")
+                            {
+                            div.innerHTML = "Dear "+ userIdVar + " registered successfully,please visit home page to login!!!";
+                            }else {
+                              div.innerHTML = "Failed to register user,please check logs!!!";
+                            }
+                          }
 
+                        });
+
+        }
         }
 
 </script>
+
 
 </body>
 </html>
