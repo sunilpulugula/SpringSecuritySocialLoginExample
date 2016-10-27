@@ -103,7 +103,7 @@
                           success: function(data) {
                             if(data == "success")
                             {
-                            div.innerHTML = "Dear "+ userIdVar + " registered successfully,please visit home page to login!!!";
+                            div.innerHTML = "User "+ userIdVar + " registered successfully,click <a href='../login'>here </a> to login!!!";
                             }else {
                               div.innerHTML = "Failed to register user,please check logs!!!";
                             }
