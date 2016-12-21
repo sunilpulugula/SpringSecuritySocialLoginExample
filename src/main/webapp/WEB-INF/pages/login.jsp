@@ -681,7 +681,7 @@ body{
 				<div class="span3">
                 	<form name='GoogleSocialloginForm'
                       action="<c:url value='../auth/google' />" method='POST'>
-                		<img src="../images/gmail2.jpg" alt="">
+                		<img src="../images/gmail2.png" alt="">
                 		<button type="submit">
                 			<i>Sign In with Google</i>
                 		</button>
